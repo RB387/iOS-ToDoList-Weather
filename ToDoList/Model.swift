@@ -14,6 +14,7 @@ var tasks: [NSManagedObject] = []
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
 let managedContext = appDelegate.persistentContainer.viewContext
 let entity = NSEntityDescription.entity(forEntityName: "Task", in: managedContext)!
+
 var name: String? {
     get { return UserDefaults.standard.string(forKey: "Userdata.name") }
     set { UserDefaults.standard.set(newValue, forKey: "Userdata.name") }
@@ -24,7 +25,6 @@ var secondName: String? {
 }
 
 func addItem(_ name: String){
-    
     let task = NSManagedObject(entity: entity, insertInto: managedContext)
     task.setValue(name, forKey: "name")
     do {
@@ -46,8 +46,6 @@ func removeItem(at index: Int){
 }
 
 func loadCoreData(){
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-    let managedContext = appDelegate.persistentContainer.viewContext
     let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Task")
     do {
         tasks = try managedContext.fetch(fetchRequest)
